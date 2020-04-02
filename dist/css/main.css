@@ -1,0 +1,48 @@
+body {
+  background: #d6cfe7; }
+
+.textarea {
+  border: 2px solid #705aa5;
+  height: 30vh;
+  width: 90%;
+  resize: none;
+  margin: 1rem auto;
+  text-align: left;
+  padding: 1%;
+  display: flex; }
+
+.keyboard {
+  background: #705aa5;
+  max-width: 1200px;
+  margin: 0 auto; }
+  .keyboard .keyboard__keys {
+    margin: 0 20px;
+    padding: 3%; }
+    .keyboard .keyboard__keys .key {
+      width: 6.7%;
+      min-height: 30px;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      position: relative;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      cursor: pointer;
+      margin: 0.3%;
+      font-size: 1.05rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 100%; }
+      .keyboard .keyboard__keys .key:hover {
+        color: #e062ff; }
+    .keyboard .keyboard__keys .key--wide {
+      width: 11.5%; }
+    .keyboard .keyboard__keys .key--wide-extra {
+      width: 55%; }
+    .keyboard .keyboard__keys .key-active {
+      color: #e062ff; }
+    .keyboard .keyboard__keys .key--wide-2 {
+      width: 14%; }
+    .keyboard .keyboard__keys .key-press {
+      background: #e062ff; }

@@ -1,0 +1,88 @@
+$bg-color: rgb(214, 207, 231);
+$main-color: rgb(112, 90, 165);
+$secondary-color: rgb(224, 98, 255);
+
+body {
+    background: $bg-color;
+
+}
+
+.textarea {
+   border: 2px solid $main-color;
+   height: 30vh;
+   width:90%;
+   resize: none;
+   margin: 1rem auto;
+   text-align: left;
+   padding: 1%;
+   display: flex;
+   }
+
+.keyboard {
+    background: $main-color;
+    max-width: 1200px;
+    margin: 0 auto;
+   
+    
+    
+.keyboard__keys {
+    margin: 0 20px;
+    padding: 3%;
+   
+    
+
+
+.key {
+    width: 6.7%;
+    //min-width: 20px;
+    min-height: 30px;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    margin: 0.3%;
+    font-size: 1.05rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 100%;
+   
+    &:hover {
+        color: $secondary-color;
+      
+    }
+   
+}
+
+.key--wide {
+    width: 11.5%;
+    //max-width: 160px;
+}
+
+.key--wide-extra {
+    width: 55% ;
+   // max-width: 480px;
+}
+
+.key-active{
+    color: $secondary-color
+}
+
+.key--wide-2 {
+    width: 14%;
+   // max-width: 170px;
+
+}
+
+.key-press{
+ 
+   background: $secondary-color;
+   
+}
+ 
+}   
+    
+}
