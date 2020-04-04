@@ -16,8 +16,8 @@ body {
   max-width: 1200px;
   margin: 0 auto; }
   .keyboard .keyboard__keys {
-    margin: 0 20px;
-    padding: 3%; }
+    margin: 0 5px;
+    padding: 1%; }
     .keyboard .keyboard__keys .key {
       width: 6.7%;
       min-height: 30px;
@@ -35,7 +35,7 @@ body {
       justify-content: center;
       opacity: 100%; }
       .keyboard .keyboard__keys .key:hover {
-        color: #e062ff; }
+        background-color: #e062ff; }
     .keyboard .keyboard__keys .key--wide {
       width: 11.5%; }
     .keyboard .keyboard__keys .key--wide-extra {

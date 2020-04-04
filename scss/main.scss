@@ -10,13 +10,13 @@ body {
 .textarea {
    border: 2px solid $main-color;
    height: 30vh;
-   width:90%;
+   width:90%;           
    resize: none;
    margin: 1rem auto;
    text-align: left;
    padding: 1%;
    display: flex;
-   }
+      }
 
 .keyboard {
     background: $main-color;
@@ -26,8 +26,8 @@ body {
     
     
 .keyboard__keys {
-    margin: 0 20px;
-    padding: 3%;
+    margin: 0 5px;
+    padding: 1%;
    
     
 
@@ -49,9 +49,10 @@ body {
     align-items: center;
     justify-content: center;
     opacity: 100%;
+    
    
     &:hover {
-        color: $secondary-color;
+        background-color: $secondary-color;
       
     }
    

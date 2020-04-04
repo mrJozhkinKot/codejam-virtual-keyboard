@@ -1,9 +1,11 @@
 
-window.onload =  
-    function() {
-   Keyboard.init()
-   Keyboard.pressKey()
-   Keyboard.pressCaps()
+window.onload =
+    function () {
+        Keyboard.init()
+        Keyboard.toggleLang()
+        Keyboard.pressCaps()
+        Keyboard.changeLangByKeys()
+        //    Keyboard.pressKey()
     }
 
 const Keyboard = {
@@ -11,247 +13,280 @@ const Keyboard = {
         textarea: null,
         keyboard: null,
         keyboardKeys: null,
-        keys: []
+        keys: [],
     },
 
     properties: {
-    //  value: '',
-     capsLock: false,
-     langRu: false
+        //  value: '',
+        capsLock: false,
+        language: true
     },
 
-        init() {
-            //create textarea
-      
-      this.elements.textarea = document.createElement('textarea');
-      this.elements.textarea.classList = 'textarea';
-      this.elements.textarea.setAttribute('autofocus', true);
-      document.body.appendChild(this.elements.textarea);
+    init() {
+        //create textarea
 
-       
-       //create keyboard
-      this.elements.keyboard = document.createElement('div');
-      this.elements.keyboardKeys = document.createElement('div');    
-      this.elements.keyboard.classList = 'keyboard';
-      this.elements.keyboardKeys.classList = 'keyboard__keys';
-      this.elements.keyboardKeys.appendChild(this.createKeys());
-      this.elements.keyboard.appendChild(this.elements.keyboardKeys);
-      document.body.appendChild(this.elements.keyboard);
-      this.elements.keys = this.elements.keyboardKeys.querySelectorAll('.key');
+        this.elements.textarea = document.createElement('textarea');
+        this.elements.textarea.classList = 'textarea';
+        this.elements.textarea.setAttribute('autofocus', true);
+        document.body.appendChild(this.elements.textarea);
+
+
+        //create keyboard
+        this.elements.keyboard = document.createElement('div');
+        this.elements.keyboardKeys = document.createElement('div');
+        this.elements.keyboard.classList = 'keyboard';
+        this.elements.keyboardKeys.classList = 'keyboard__keys';
+        //   this.elements.keyboardKeys.appendChild(this.createKeys());
+        this.elements.keyboard.appendChild(this.elements.keyboardKeys);
+        document.body.appendChild(this.elements.keyboard);
+        this.elements.keys = this.elements.keyboardKeys.querySelectorAll('.key');
+
     },
-    
+
     createKeys() {
-    const textarea = this.elements.textarea;
-    const fragment = document.createDocumentFragment();
-    const keys = [
-        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
-        'tab','q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '"', 'enter',
-        'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '[', 
-        ']','shift-l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.',
-        '/', 'shift-r', 'ctrl-l', 'wind', 'alt-l', 'space', 'alt-r', '~', 'ctrl-r'
-    ]
+        const textarea = this.elements.textarea;
+        const fragment = document.createElement('div');
+        fragment.classList.add('fragment');
+        const keyEng = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
+            'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '"', 'enter',
+            'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '[',
+            ']', 'shift-l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.',
+            '/', 'shift-r', 'ctrl-l', 'wind', 'alt-l', 'space', 'alt-r', '~', 'ctrl-r'
+        ];
 
-    const keysRU = [
-        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
-        'tab','й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', '"', 'enter',
-        'caps', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 
-        '|','shift-l', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю',
-        '/', 'shift-r', 'ctrl-l', 'wind', 'alt-l', 'space', 'alt-r', '~', 'ctrl-r'
-    ]
-   
-      keys.forEach(key => {
-      const keyButton= document.createElement('button');
-      const lineBreak = ['backspace', 'enter', ']', 'shift-r'].indexOf(key) !== -1;
-      keyButton.setAttribute('type', 'button');
-      keyButton.classList.add('key');
-      
+        const keyRu = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
+            'tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', '"', 'enter',
+            'caps', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э',
+            '|', 'shift-l', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю',
+            '/', 'shift-r', 'ctrl-l', 'wind', 'alt-l', 'space', 'alt-r', '~', 'ctrl-r'
+        ];
 
-      switch (key) {
-        case 'backspace':
-            keyButton.classList.add('key--wide');
-            keyButton.innerHTML = '<i class="fas fa-backspace"></i>';
-            keyButton.setAttribute ('data', 'Backspace');
-            keyButton.addEventListener ('click', function () {
-               let length = textarea.value.length;
-               textarea.value = textarea.value.substring(0, length-1);
-                               })
 
-        break;
 
-        case 'tab':
-            keyButton.innerHTML = '<i class="fas fa-exchange-alt"></i>';
-            keyButton.setAttribute ('data', 'Tab');
-        break;
+        let keys = this.properties.language ? keyEng : keyRu;
 
-        case 'enter':
-            keyButton.classList.add('key--wide');
-            keyButton.setAttribute ('data','Enter');
-            keyButton.innerHTML = '<i class="fas fa-external-link-alt"></i>';
-            keyButton.addEventListener ('click', function (e) {
-                textarea.value += '\n';
-                textarea.focus();
-                })
-        break;
+        keys.forEach(key => {
+            const keyButton = document.createElement('button');
+            const lineBreak = ['backspace', 'enter', ']', 'shift-r'].indexOf(key) !== -1;
+            keyButton.setAttribute('type', 'button');
+            keyButton.classList.add('key');
 
-        case 'caps':
-            keyButton.classList.add('key--wide');
-            keyButton.classList.add('CapsLock');
-            keyButton.innerHTML = '<i class="fas fa-caret-square-up"></i>';
-            keyButton.addEventListener ('click',  (e) => {
-               e.target.classList.toggle ('key-active');
-               this.toggleCapsLock();
 
-            })
-        break; 
+            switch (key) {
+                case 'backspace':
+                    keyButton.classList.add('key--wide');
+                    keyButton.innerHTML = '<i class="fas fa-backspace"></i>';
+                    keyButton.addEventListener('click', function () {
+                        let length = textarea.value.length;
+                        textarea.value = textarea.value.substring(0, length - 1);
+                    })
+                    break;
 
-        case 'shift-l':
-            keyButton.classList.add('key--wide');
-            keyButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-            keyButton.setAttribute ('data', 'ShiftLeft');
-                       
-        
-        break;
+                case 'tab':
+                    keyButton.innerHTML = '<i class="fas fa-exchange-alt"></i>';
+                    keyButton.setAttribute('data', 'Tab');
+                    break;
 
-        case 'shift-r':
-            keyButton.classList.add('key--wide-2');
-            keyButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-            keyButton.setAttribute ('data', 'ShiftRight');
-        break;
-        
-        case 'wind':
-            keyButton.innerHTML = '<i class="fab fa-windows"></i>';
-            keyButton.setAttribute ('data', 'MetaLeft');
-        break;
+                case 'enter':
+                    keyButton.classList.add('key--wide');
+                    keyButton.innerHTML = '<i class="fas fa-external-link-alt"></i>';
+                    keyButton.addEventListener('click', function (e) {
+                        textarea.value += '\n';
+                        textarea.focus();
+                    })
+                    break;
 
-        case 'space':
-            keyButton.classList.add('key--wide-extra');
-            keyButton.textContent = '___';
-            keyButton.setAttribute ('data', 'Space');
-            keyButton.addEventListener ('click', function () {
-                textarea.value += ' ';
+                case 'caps':
+                    keyButton.classList.add('key--wide');
+                    keyButton.classList.add('CapsLock');
+                    keyButton.innerHTML = '<i class="fas fa-caret-square-up"></i>';
+                    keyButton.addEventListener('click', (e) => {
+                        e.target.classList.toggle('key-active');
+                        this.toggleCapsLock();
+                    })
+                    break;
 
-                })
-     
-        break;
+                case 'shift-l':
+                    keyButton.classList.add('key--wide');
+                    keyButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+                    break;
 
-        case 'ctrl-l':
-            keyButton.innerHTML = `<span>${key.substring(0,4).toLowerCase()}<span>`;
-            keyButton.setAttribute ('data','ControlLeft');
-            keyButton.addEventListener ('click', function () {
-               console.log ('ctrl on')
-               textarea.focus();
-                })
-        break; 
-        
-        case 'ctrl-r':
-            keyButton.innerHTML = `<span>${key.substring(0,4).toLowerCase()}<span>`;
-            keyButton.setAttribute ('data', 'ControlRight');
-            keyButton.addEventListener ('click', function (e) {
-                textarea.focus();
-               console.log ('ctrl on')
-                })
-        break; 
+                case 'shift-r':
+                    keyButton.classList.add('key--wide-2');
+                    keyButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+                    break;
 
-        case 'alt-l':
-            keyButton.innerHTML = `<span>${key.substring(0,3).toLowerCase()}<span>`;
-            keyButton.setAttribute ('data','AltLeft');
-            keyButton.addEventListener ('click', function () {
-                textarea.focus();
-               console.log ('alt on')
-                })
-        break;  
-       
-        case 'alt-r':
-            keyButton.innerHTML = `<span>${key.substring(0,3).toLowerCase()}<span>`;
-            keyButton.setAttribute ('data', 'AltRight');
-            keyButton.addEventListener ('click', function () {
-               console.log ('alt on');
-               textarea.focus();
-                })
-        break; 
-       
-      default:
-        keyButton.textContent = key.toLowerCase()     
-        keyButton.addEventListener ('click', function () {
-        textarea.value += this.textContent;
-             })
-        
-    break;
-      }
-      fragment.appendChild(keyButton);
-      if (lineBreak) {
-        fragment.appendChild(document.createElement('br'));
-      }
-               
-         });
-      return fragment;   
-    },
+                case 'wind':
+                    keyButton.innerHTML = '<i class="fab fa-windows"></i>';
+                    keyButton.addEventListener('click', () => {
+                        this.changeLang();
+                        this.toggleLang();
 
-    triggerEvents(handlerName) {
+                    })
 
-    },
+                    break;
 
-    toggleCapsLock(){
-    this.properties.capsLock = !this.properties.capsLock;
-    
-    for (const key of this.elements.keys) {
-        if (key.childElementCount === 0) {
-        key.textContent = this.properties.capsLock? key.textContent.toUpperCase() : key.textContent.toLowerCase(); 
-    }
-}
+                case 'space':
+                    keyButton.classList.add('key--wide-extra');
+                    keyButton.textContent = '___';
+                    keyButton.addEventListener('click', function () {
+                        textarea.value += ' ';
 
-    },
+                    })
 
-    toggleLang(){
+                    break;
 
-    },
+                case 'ctrl-l':
+                    keyButton.innerHTML = `<span>${key.substring(0, 4).toLowerCase()}<span>`;
+                    keyButton.classList.add('ctrl');
+                    keyButton.addEventListener('click', function () {
+                        console.log('ctrl on')
+                        textarea.focus();
+                    })
+                    break;
 
-    pressKey(){
-    
-        document.addEventListener ('keydown', animateOn);
-        document.addEventListener ('keyup', animateOff);
-     
-       
-        
-    const keys = this.elements.keyboardKeys.querySelectorAll('.key');
-    function animateOn (e) {
-        for (const key of keys)  {
-            // console.log(e.key)
-            if (e.key == key.textContent) {
-                key.classList.add('key-press'); }
-            if (key.getAttribute('data') === e.code) {
-                {key.classList.add('key-press')};
+                case 'ctrl-r':
+                    keyButton.innerHTML = `<span>${key.substring(0, 4).toLowerCase()}<span>`;
+                    keyButton.addEventListener('click', function (e) {
+                        textarea.focus();
+                        console.log('ctrl on')
+                    })
+                    break;
+
+                case 'alt-l':
+                    keyButton.innerHTML = `<span>${key.substring(0, 3).toLowerCase()}<span>`;
+                    keyButton.classList.add('alt');
+                    keyButton.addEventListener('click', function () {
+                        textarea.focus();
+                     
+                    })
+                    break;
+
+                case 'alt-r':
+                    keyButton.innerHTML = `<span>${key.substring(0, 3).toLowerCase()}<span>`;
+
+                    keyButton.addEventListener('click', function () {
+                                           textarea.focus();
+                    })
+                    break;
+
+                default:
+
+                    keyButton.textContent = key.toLowerCase();
+                    keyButton.addEventListener('click', function () {
+                        textarea.value += this.textContent;
+
+                    })
+
+                    break;
+
             }
-       
-            }
-    }
 
-    function animateOff (e) {
-        for (const key of keys)  {
-            if (e.key == key.textContent) {
-            key.classList.remove('key-press'); }
-            if (key.getAttribute('data') === e.code) {
-                {key.classList.remove('key-press');
-               e.preventDefault();   };
+            fragment.appendChild(keyButton);
+            if (lineBreak) {
+                fragment.appendChild(document.createElement('br'));
             }
-            
-            
-           }
-    }
 
-},
-pressCaps(){
-document.addEventListener ('keyup', (e) => {
-    if(e.code =='CapsLock') {
-        console.log ('ddd');
-       document.querySelector('.CapsLock').classList.toggle ('key-active');
-        this.toggleCapsLock();
+        });
+        return fragment;
+    },
+
+
+    toggleCapsLock() {
+        this.properties.capsLock = !this.properties.capsLock;
+        const keys = document.querySelectorAll('.key');
+        for (const key of keys) {
+            if (key.childElementCount === 0) {
+                key.textContent = this.properties.capsLock ? key.textContent.toUpperCase() : key.textContent.toLowerCase();
+            }
         }
-});
-}
 
+    },
 
+    changeLang() {
+        const fragment = document.querySelector('.fragment');
+        this.elements.keyboardKeys.removeChild(fragment);
+    },
 
+    
+
+    toggleLang() {
+
+        // console.log(this.properties.language)
+        this.elements.keyboardKeys.appendChild(this.createKeys());
+        this.properties.language = !this.properties.language;
+        this.addData();
+        this.pressKey();
+
+    },
+
+    addData() {
+        const dataCode = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0',
+            'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'Quote',
+            'Enter', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'BracketLeft',
+            'BracketRight', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period',
+            'Slash', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'Backquote', 'ControlRight'
+        ];
+        const keys = document.querySelectorAll('.key');
+        for (let i = 0; i < keys.length; i++) {
+            for (let j = 0; j < dataCode.length; j++) {
+                keys[i].setAttribute('data', `${dataCode[i]}`);
+                i++;
+            }
+        }
+    },
+
+    pressKey() {
+
+        document.addEventListener('keydown', animateOn);
+        document.addEventListener('keyup', animateOff);
+        const keys = document.querySelectorAll('.key');
+        function animateOn(e) {
+            // console.log(e.code);
+            for (const key of keys) {
+                if (e.code === key.getAttribute('data')) {
+                    key.classList.add('key-press');
+                }
+
+            }
+        }
+
+        function animateOff(e) {
+            for (const key of keys) {
+                if (e.code === key.getAttribute('data')) {
+                    key.classList.remove('key-press');
+                    e.preventDefault();
+                }
+            }
+        }
+          
+
+    },
+
+    pressCaps() {
+        document.addEventListener('keyup', (e) => {
+            if (e.code == 'CapsLock') {
+                document.querySelector('.CapsLock').classList.toggle('key-active');
+                this.toggleCapsLock();
+            }
+        });
+    }, 
+
+    changeLangByKeys() {
+        const alt = document.querySelector('.alt');
+        const ctrl = document.querySelector('.ctrl');
+      
+            document.addEventListener('keydown', () =>{
+              if (alt.classList.contains('key-press') && ctrl.classList.contains('key-press')) 
+              {this.changeLang();
+                this.toggleLang();;
+               }
+        })
+     
+       
+    //    if (alt.classList.contains('key-press')) {console.log('ddd')}
+    //    else(console.log('hui'))
+    }
 }
 
 
