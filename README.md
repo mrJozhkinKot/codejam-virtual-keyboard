@@ -1,1 +1,1 @@
-[Виртуальная клавиатура](https://mrJozhkinKot.github.io/codejam-virtual-keyboard/dist/index.html)
+[Виртуальная клавиатура](https://mrJozhkinKot.github.io/codejam-virtual-keyboard)
