@@ -34,9 +34,8 @@ body {
 
 .key {
     width: 6.7%;
-    //min-width: 20px;
-    min-height: 30px;
-    border: none;
+       min-height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     text-align: center;
     position: relative;
@@ -47,43 +46,58 @@ body {
     font-size: 1.05rem;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    opacity: 100%;
+    justify-content: center;       
+    transition: all 0.4s linear;
+    transform: scale(1);
+    
     
    
     &:hover {
         background-color: $secondary-color;
       
     }
-   
+ 
 }
 
 .key--wide {
     width: 11.5%;
-    //max-width: 160px;
+   
 }
 
 .key--wide-extra {
-    width: 55% ;
-   // max-width: 480px;
+    width: 40.5% ;
+   
 }
 
 .key-active{
-    color: $secondary-color
+    color: $secondary-color;
+   
 }
 
 .key--wide-2 {
     width: 14%;
-   // max-width: 170px;
+
 
 }
 
 .key-press{
  
    background: $secondary-color;
+   border-radius: 10px;
+   transform: scale(1.1);
+ 
    
 }
  
 }   
     
+
+}
+.comment{
+  color: $main-color;
+  margin-top: 1rem;
+  text-align: center;
+  p {
+      margin: 0;
+  }
 }
