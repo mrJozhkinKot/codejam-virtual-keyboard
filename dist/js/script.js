@@ -1,9 +1,8 @@
-
 window.onload =
 function () {
     Keyboard.init()
     Keyboard.locStorage()
-    Keyboard.toggleLang()
+        Keyboard.toggleLang()
     Keyboard.changeLangByKeys()
    
    
@@ -44,15 +43,15 @@ init() {
     this.elements.keyboard.appendChild(this.elements.keyboardKeys);
     document.body.appendChild(this.elements.keyboard);
     this.elements.keys = this.elements.keyboardKeys.querySelectorAll('.key');
-
+ 
     //create comments
     this.elements.comment = document.createElement('div');
     this.elements.comment.classList = 'comment';
   document.body.appendChild(this.elements.comment);
   this.elements.comment.innerHTML = `<p>Клавиатура создана в OC Windows
   '<i class="fab fa-windows"></i>'</p>
-                       <p>Для переключения языка комбинация: левыe ctrl + alt</p>
-                         <i class="far fa-smile-beam"></i>`
+                       <p>Для переключения языка комбинация: левыe ctrl + alt</p>`
+                       
 },
 
 createKeys() {
@@ -134,10 +133,10 @@ createKeys() {
 
             case 'wind':
                 keyButton.innerHTML = '<i class="fab fa-windows"></i>';
-                keyButton.addEventListener('click', () => {
-                this.changeLang();
-                this.toggleLang();
-                })
+                // keyButton.addEventListener('click', () => {
+                // this.changeLang();
+                // this.toggleLang();
+                // })
                   break;
 
             case 'space':
@@ -255,18 +254,15 @@ toggleCapsLock() {
 
 },
 
-changeLang() {
+delLang() {
     const fragment = document.querySelector('.fragment');
     this.elements.keyboardKeys.removeChild(fragment);
-   //this.pressKey();
+
 },
 
 
-
 toggleLang() {
-
-     this.elements.keyboardKeys.appendChild(this.createKeys());
-
+    this.elements.keyboardKeys.appendChild(this.createKeys()); 
     this.properties.language = !this.properties.language;
     
     this.addData();
@@ -291,20 +287,22 @@ addData() {
     }
 },
 
-pressKey() {
 
-    document.addEventListener('keydown', animateOn);
-    document.addEventListener('keyup', animateOff);
+pressKey() {
+  
+    document.addEventListener('keydown', keyDown);
+    document.addEventListener('keyup', keyUp);
     const keys = document.querySelectorAll('.key');
     const textarea = document.querySelector('textarea');
     const signts = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
-    const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-    function animateOn(e) {
+     const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+
+    function keyDown(e) {
        
         for (const key of keys) {
             if (e.code === key.getAttribute('data')) {
                 key.classList.add('key-press');
-                if (key.textContent.length === 1 || key.getAttribute('data')== 'Tab') {
+                if (key.getAttribute('data')== 'Tab') {
                     e.preventDefault();
                 }
             }
@@ -324,16 +322,15 @@ pressKey() {
         }
     }
 
-    function animateOff(e) {
+    function keyUp(e) {
         e.preventDefault();
         for (const key of keys) {
-            console.log(e.key);
-            if (e.code === key.getAttribute('data')) {
+                 if (e.code === key.getAttribute('data')) {
                 key.classList.remove('key-press');
-                if (key.textContent.length === 1) {
-                    textarea.value += key.textContent; }
-                e.preventDefault();
-            }
+            //     if (key.textContent.length === 1) {
+            //         textarea.value += key.textContent; }
+            //     e.preventDefault();
+             }
 
 
             if (e.code == 'ShiftLeft' || e.code == 'ShiftRight') {
@@ -352,6 +349,7 @@ pressKey() {
 
         }
     }
+
 },
 
 pressCaps() {
@@ -370,7 +368,7 @@ pressCaps() {
 
     document.addEventListener('keydown', () => {
         if (alt.classList.contains('key-press') && ctrl.classList.contains('key-press')) {
-            this.changeLang();
+            this.delLang();
             this.toggleLang();
         }
     })
@@ -382,9 +380,3 @@ locStorage() {
     this.properties.language = (localStorage.getItem('lang')) ? localStorage.getItem('lang') : true;
         }
 }
-
-
-
-
-// let cursorPosition = INPUT.selectionStart;
-// const cursorPositionEnd = INPUT.selectionEnd;
