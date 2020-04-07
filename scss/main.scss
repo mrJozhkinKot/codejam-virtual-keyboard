@@ -1,0 +1,103 @@
+$bg-color: rgb(214, 207, 231);
+$main-color: rgb(112, 90, 165);
+$secondary-color: rgb(224, 98, 255);
+
+body {
+    background: $bg-color;
+
+}
+
+.textarea {
+   border: 2px solid $main-color;
+   height: 30vh;
+   width:85%;           
+   resize: none;
+   margin: 1rem auto;
+   text-align: left;
+   padding: 1%;
+   display: flex;
+      }
+
+.keyboard {
+    background: $main-color;
+    max-width: 800px;
+    margin: 0 auto;
+   
+    
+    
+.keyboard__keys {
+    margin: 0 5px;
+    padding: 1%;
+   
+    
+
+
+.key {
+    width: 6.7%;
+       min-height: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    margin: 0.3%;
+    font-size: 1.05rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;       
+    transition: all 0.4s linear;
+    transform: scale(1);
+    
+    
+   
+    &:hover {
+        background-color: $secondary-color;
+      
+    }
+ 
+}
+
+.key--wide {
+    width: 11.5%;
+   
+}
+
+.key--wide-extra {
+    width: 40.5% ;
+   
+}
+
+.key-active{
+    color: $secondary-color;
+   
+}
+
+.key--wide-2 {
+    width: 14%;
+
+
+}
+
+.key-press{
+ 
+   background: $secondary-color;
+   border-radius: 10px;
+   transform: scale(1.1);
+ 
+   
+}
+ 
+}   
+    
+
+}
+.comment{
+  color: $main-color;
+  margin-top: 1rem;
+  text-align: center;
+  p {
+      margin: 0;
+  }
+}
