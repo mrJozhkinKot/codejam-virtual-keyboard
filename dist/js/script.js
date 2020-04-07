@@ -15,7 +15,8 @@ const Keyboard = {
 
     properties: {
         capsLock: false,
-        language: true
+        language: true,
+        value: ''
     },
 
     init() {
@@ -25,8 +26,8 @@ const Keyboard = {
         this.elements.textarea.classList = 'textarea';
         this.elements.textarea.setAttribute('autofocus', true);
         document.body.appendChild(this.elements.textarea);
-
-
+        this.elements.textarea.value = localStorage.getItem('text');
+        
         //create keyboard
         this.elements.keyboard = document.createElement('div');
         this.elements.keyboardKeys = document.createElement('div');
@@ -38,7 +39,7 @@ const Keyboard = {
         this.elements.keyboardKeys.appendChild(this.createKeys());
 
         //add handlers
-        
+
         this.addData();
         this.pressKey();
         this.pressCaps();
@@ -49,7 +50,8 @@ const Keyboard = {
         document.body.appendChild(this.elements.comment);
         this.elements.comment.innerHTML = `<p>Клавиатура создана в OC Windows
   '<i class="fab fa-windows"></i>'</p>
-                       <p>Для переключения языка комбинация: левыe ctrl + alt</p>`
+                       <p>Для переключения языка комбинация: левыe ctrl + alt</p>
+                       <i class="far fa-smile-beam"></i>`
 
     },
 
@@ -58,14 +60,14 @@ const Keyboard = {
         const fragment = document.createElement('div');
         fragment.classList.add('fragment');
         const keyEng = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
-            'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '"', 'enter',
-            'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '[',
+            'tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', 'enter',
+            'caps', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '"',
             ']', 'shift-l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.',
             'arrow-up', 'shift-r', 'ctrl-l', 'wind', 'alt-l', 'space', 'alt-r', 'arrow-l', 'arrow-down', 'arrow-r', 'ctrl-r'
         ];
 
         const keyRu = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'backspace',
-            'tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', '"', 'enter',
+            'tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'enter',
             'caps', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э',
             '/', 'shift-l', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю',
             'arrow-up', 'shift-r', 'ctrl-l', 'wind', 'alt-l', 'space', 'alt-r', 'arrow-l', 'arrow-down', 'arrow-r', 'ctrl-r'
@@ -246,11 +248,10 @@ const Keyboard = {
         localStorage.setItem('lang', lang === 'true' ? 'false' : 'true');
         document.location.reload(true);
     },
-
     addData() {
         const dataCode = ['Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0',
-            'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'Quote',
-            'Enter', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'BracketLeft',
+            'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft',
+            'Enter', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote',
             'BracketRight', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period',
             'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'
         ];
@@ -271,8 +272,9 @@ const Keyboard = {
         this.changeLangByKeys();
         const keys = document.querySelectorAll('.key');
         const textarea = this.elements.textarea;
-        const signts = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')'];
+        const signts = ['!', '@', '#', '$', '%', '^', '?', '*', '(', ')'];
         const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+        
 
         function keyDown(e) {
 
@@ -306,7 +308,8 @@ const Keyboard = {
                     key.classList.remove('key-press');
                     if (key.textContent.length === 1) {
                         e.preventDefault();
-                        textarea.value += key.textContent;
+                     textarea.value += key.textContent;
+                       
                     }
 
                 }
@@ -326,6 +329,7 @@ const Keyboard = {
                     }
                 }
             }
+            localStorage.setItem('text', textarea.value);
         }
     },
 
@@ -351,5 +355,6 @@ const Keyboard = {
 
     locStorage() {
         this.properties.language = (localStorage.getItem('lang')) ? localStorage.getItem('lang') : true;
+        this.properties.value = (localStorage.getItem('text')) ? localStorage.getItem('text') : '';
     }
 }
